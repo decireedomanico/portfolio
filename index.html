@@ -476,25 +476,219 @@
             box-shadow: 0 20px 40px rgba(255, 0, 255, 0.2);
         }
         
-        .project-image {
-            height: 200px;
-            background: linear-gradient(45deg, #1a1a3a, #2a2a5a);
+        /* ENHANCED: Horizontal Scrolling Gallery */
+        .gallery-container {
+            position: relative;
+            width: 100%;
+            margin: 40px auto;
+            padding: 20px 0;
+        }
+        
+        .gallery-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 0 10px;
+        }
+        
+        .gallery-nav {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .nav-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--electric-blue);
+            color: var(--electric-blue);
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 3rem;
-            color: var(--electric-blue);
+            font-size: 1.2rem;
+            transition: all 0.3s;
         }
         
-        .project-content {
-            padding: 30px;
+        .nav-btn:hover {
+            background: var(--electric-blue);
+            color: var(--city-light);
+            transform: scale(1.1);
         }
         
-        .project-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            margin-bottom: 15px;
+        .nav-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+        
+        .nav-btn:disabled:hover {
+            background: rgba(255, 255, 255, 0.1);
             color: var(--electric-blue);
+            transform: none;
+        }
+        
+        .gallery-wrapper {
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            padding: 20px 0;
+        }
+        
+        .gallery-track {
+            display: flex;
+            gap: 25px;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 0 10px;
+        }
+        
+        .gallery-item {
+            flex: 0 0 auto;
+            width: 300px;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 2px solid transparent;
+            background: linear-gradient(45deg, var(--cyber-purple), var(--neon-pink));
+            padding: 3px;
+        }
+        
+        .gallery-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, 
+                rgba(255, 0, 255, 0.1) 0%, 
+                rgba(0, 255, 255, 0.1) 100%);
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-15px) scale(1.05);
+            border-color: var(--electric-blue);
+            box-shadow: 
+                0 20px 40px rgba(255, 0, 255, 0.4),
+                0 0 30px rgba(0, 255, 255, 0.3);
+        }
+        
+        .gallery-item:hover::before {
+            opacity: 1;
+        }
+        
+        .gallery-item.active {
+            transform: translateY(-10px) scale(1.03);
+            border-color: var(--neon-pink);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 13px;
+            display: block;
+            transition: transform 0.3s;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+        
+        .gallery-item-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+            color: white;
+            padding: 20px;
+            transform: translateY(100%);
+            transition: transform 0.3s;
+            z-index: 2;
+        }
+        
+        .gallery-item:hover .gallery-item-caption {
+            transform: translateY(0);
+        }
+        
+        .gallery-dots {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 30px;
+        }
+        
+        .gallery-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .gallery-dot.active {
+            background: var(--neon-pink);
+            transform: scale(1.2);
+            box-shadow: 0 0 10px var(--neon-pink);
+        }
+        
+        /* Mobile Gamer Hub Project Styling */
+        .mobile-gamer-card {
+            grid-column: 1 / -1;
+        }
+        
+        .mobile-gamer-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+        
+        .mobile-gamer-image {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 3px solid transparent;
+            background: linear-gradient(var(--city-light), var(--city-light)) padding-box,
+                        linear-gradient(45deg, var(--neon-pink), var(--electric-blue)) border-box;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+        
+        .mobile-gamer-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .live-site-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(45deg, var(--neon-pink), var(--cyber-purple));
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-decoration: none;
+            z-index: 2;
+            box-shadow: 0 5px 15px rgba(255, 0, 255, 0.4);
+            transition: all 0.3s;
+        }
+        
+        .live-site-badge:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(255, 0, 255, 0.6);
         }
         
         .project-tags {
@@ -670,6 +864,10 @@
             .timeline-dot {
                 left: 12px;
             }
+            
+            .mobile-gamer-content {
+                grid-template-columns: 1fr;
+            }
         }
         
         @media (max-width: 768px) {
@@ -695,6 +893,16 @@
                 flex-direction: column;
                 align-items: flex-start;
             }
+            
+            .gallery-item {
+                width: 250px;
+            }
+            
+            .gallery-header {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
         }
         
         @media (max-width: 480px) {
@@ -708,6 +916,10 @@
             
             .contact-info {
                 flex-direction: column;
+            }
+            
+            .gallery-item {
+                width: 220px;
             }
         }
     </style>
@@ -854,7 +1066,7 @@
                         <span class="honor-badge" style="background: linear-gradient(45deg, #ff9900, #ff5500);">Dean's Lister 2021-2025</span>
                     </div>
                     <p style="margin-top: 20px; font-style: italic; opacity: 0.9;">
-                        Thesis: "Effect of Traffic Congestion on Customer Experience in On-Demand Delivery Services"
+                        Thesis: Effect of Traffic Congestion to the Customer Experience Towards On-Demand Delivery Services
                     </p>
                 </div>
                 
@@ -888,41 +1100,122 @@
                 <p style="opacity: 0.8;">Practical application of skills and knowledge</p>
             </div>
             <div class="projects-grid">
+                <!-- Graphic Design Project -->
                 <div class="project-card">
-                    <div class="project-image">
-                        <i class="fas fa-gamepad"></i>
-                    </div>
-                    <div class="project-content">
-                        <h3 class="project-title">Mobile Gamer Hub</h3>
-                        <p>Personal SEO & development project built with HTML/CSS on GitHub Pages. Focused on practical SEO implementation including keyword optimization, meta structuring, and mobile responsiveness.</p>
-                        <div class="project-tags">
-                            <span class="project-tag">HTML/CSS</span>
-                            <span class="project-tag">SEO</span>
-                            <span class="project-tag">GitHub Pages</span>
-                            <span class="project-tag">Mobile First</span>
-                        </div>
-                        <a href="https://mobilegamerhub.online" target="_blank" style="color: var(--neon-pink); text-decoration: none; margin-top: 15px; display: inline-block;">
-                            Visit Project <i class="fas fa-external-link-alt"></i>
-                        </a>
-                    </div>
-                </div>
-                
-                <div class="project-card">
-                    <div class="project-image">
-                        <i class="fas fa-palette"></i>
-                    </div>
                     <div class="project-content">
                         <h3 class="project-title">Graphic Design Portfolio</h3>
-                        <p>Created 20+ digital assets including social media graphics, marketing materials, and campaign visuals with SEO-optimized content strategy. View complete collection on Wakelet.</p>
+                        <p>When I was in college, I discovered print-on-demand as a way to earn passive income while studying. Starting in September 2022, I taught myself how to create different styles of designs based on trends and keywords specific to different countries.</p>
+                        
+                        <div class="gallery-container">
+                            <div class="gallery-header">
+                                <h3 style="color: var(--electric-blue); margin: 0;">Design Gallery</h3>
+                                <div class="gallery-nav">
+                                    <button class="nav-btn prev-btn" aria-label="Previous">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </button>
+                                    <button class="nav-btn next-btn" aria-label="Next">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="gallery-wrapper">
+                                <div class="gallery-track" id="galleryTrack">
+                                    <!-- Redbubble Graphics -->
+                                    <div class="gallery-item">
+                                        <img src="https://i.imgur.com/4VR0wpr.png" alt="Redbubble Graphic Design 1">
+                                        <div class="gallery-item-caption">Redbubble T-shirt Design</div>
+                                    </div>
+                                    <div class="gallery-item">
+                                        <img src="https://i.imgur.com/wuNVuKd.jpeg" alt="Redbubble Graphic Design 2">
+                                        <div class="gallery-item-caption">Redbubble Hoodie Design</div>
+                                    </div>
+                                    <div class="gallery-item">
+                                        <img src="https://i.imgur.com/veMfgdi.png" alt="Redbubble Graphic Design 3">
+                                        <div class="gallery-item-caption">Trend-Based Design</div>
+                                    </div>
+                                    <div class="gallery-item">
+                                        <img src="https://i.imgur.com/l0X4Afn.png" alt="Redbubble Graphic Design 4">
+                                        <div class="gallery-item-caption">Keyword Optimized Design</div>
+                                    </div>
+                                    <div class="gallery-item">
+                                        <img src="https://i.imgur.com/Zvdk2Gk.png" alt="Redbubble Graphic Design 5">
+                                        <div class="gallery-item-caption">Market Research Design</div>
+                                    </div>
+                                    <div class="gallery-item">
+                                        <img src="https://i.imgur.com/fqzS95Y.png" alt="Redbubble Graphic Design 6">
+                                        <div class="gallery-item-caption">E-commerce Optimized Graphic</div>
+                                    </div>
+                                    <div class="gallery-item">
+                                        <img src="https://i.imgur.com/atRFMxH.png" alt="Redbubble Graphic Design 7">
+                                        <div class="gallery-item-caption">International Trend Design</div>
+                                    </div>
+                                    <div class="gallery-item">
+                                        <img src="https://i.imgur.com/b88J2xF.png" alt="Redbubble Graphic Design 8">
+                                        <div class="gallery-item-caption">Redbubble Marketplace Design</div>
+                                    </div>
+                                    <div class="gallery-item">
+                                        <img src="https://i.imgur.com/cGd2V4M.png" alt="Redbubble Graphic Design 9">
+                                        <div class="gallery-item-caption">Search Optimized Design</div>
+                                    </div>
+                                    <div class="gallery-item">
+                                        <img src="https://i.imgur.com/QlPkoFT.png" alt="Redbubble Graphic Design 10">
+                                        <div class="gallery-item-caption">Canva Created Graphic</div>
+                                    </div>
+                                    <!-- Facebook Ads -->
+                                    <div class="gallery-item">
+                                        <img src="https://i.imgur.com/gPeg41W.jpeg" alt="Facebook Ad Creative 1">
+                                        <div class="gallery-item-caption">Facebook Ad Campaign Design</div>
+                                    </div>
+                                    <div class="gallery-item">
+                                        <img src="https://i.imgur.com/FwJzJAL.jpeg" alt="Facebook Ad Creative 2">
+                                        <div class="gallery-item-caption">Social Media Marketing Ad</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="gallery-dots" id="galleryDots"></div>
+                        </div>
+                        
                         <div class="project-tags">
                             <span class="project-tag">Canva</span>
                             <span class="project-tag">Graphic Design</span>
-                            <span class="project-tag">Social Media</span>
-                            <span class="project-tag">Brand Identity</span>
+                            <span class="project-tag">Social Media Ads</span>
+                            <span class="project-tag">E-commerce</span>
+                            <span class="project-tag">SEO Optimization</span>
+                            <span class="project-tag">Trend Research</span>
                         </div>
-                        <a href="https://wakelet.com/wake/mAQJMlM5MKo9HNGfG3IZX" target="_blank" style="color: var(--neon-pink); text-decoration: none; margin-top: 15px; display: inline-block;">
-                            View Designs <i class="fas fa-external-link-alt"></i>
-                        </a>
+                    </div>
+                </div>
+                
+                <!-- Mobile Gamer Hub Project -->
+                <div class="project-card mobile-gamer-card">
+                    <div class="mobile-gamer-content">
+                        <div class="mobile-gamer-image">
+                            <a href="https://mobilegamerhub.online" target="_blank" class="live-site-badge">
+                                <i class="fas fa-external-link-alt"></i> Live Site
+                            </a>
+                            <img src="https://i.imgur.com/ZlWda3X.png" alt="Mobile Gamer Hub Website">
+                        </div>
+                        <div>
+                            <h3 class="project-title">Mobile Gamer Hub</h3>
+                            <p>I built my first website from scratch using HTML and CSS, hosted on GitHub. <p>
+                            
+                            <p>I designed it to be fully responsive and optimized it for search engines—applying everything I was learning about keyword research, meta tags, and mobile-first design. It's my personal playground where I test SEO strategies while sharing gaming content I genuinely enjoy.</p>
+                            
+                            <div class="project-tags">
+                                <span class="project-tag">HTML/CSS</span>
+                                <span class="project-tag">SEO</span>
+                                <span class="project-tag">GitHub Pages</span>
+                                <span class="project-tag">Mobile First</span>
+                                <span class="project-tag">Technical SEO</span>
+                                <span class="project-tag">Keyword Optimization</span>
+                            </div>
+                            
+                            <a href="https://mobilegamerhub.online" target="_blank" style="display: inline-block; margin-top: 20px; padding: 12px 30px; background: linear-gradient(45deg, var(--neon-pink), var(--cyber-purple)); color: white; text-decoration: none; border-radius: 25px; font-weight: 600; transition: all 0.3s;">
+                                <i class="fas fa-external-link-alt"></i> Visit Mobile Gamer Hub
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1074,6 +1367,177 @@
             }
         }
         
+        // Horizontal Gallery Functionality
+        function initGallery() {
+            const galleryTrack = document.getElementById('galleryTrack');
+            const prevBtn = document.querySelector('.prev-btn');
+            const nextBtn = document.querySelector('.next-btn');
+            const dotsContainer = document.getElementById('galleryDots');
+            const galleryItems = document.querySelectorAll('.gallery-item');
+            
+            let currentIndex = 0;
+            const itemsPerView = 3;
+            const totalItems = galleryItems.length;
+            const totalDots = Math.ceil(totalItems / itemsPerView);
+            
+            // Create dots
+            for (let i = 0; i < totalDots; i++) {
+                const dot = document.createElement('button');
+                dot.className = 'gallery-dot';
+                if (i === 0) dot.classList.add('active');
+                dot.addEventListener('click', () => {
+                    goToSlide(i);
+                });
+                dotsContainer.appendChild(dot);
+            }
+            
+            // Update active state
+            function updateActiveState() {
+                galleryItems.forEach((item, index) => {
+                    item.classList.remove('active');
+                    if (index >= currentIndex * itemsPerView && index < (currentIndex * itemsPerView) + itemsPerView) {
+                        item.classList.add('active');
+                    }
+                });
+                
+                // Update dots
+                document.querySelectorAll('.gallery-dot').forEach((dot, index) => {
+                    dot.classList.toggle('active', index === currentIndex);
+                });
+                
+                // Update button states
+                prevBtn.disabled = currentIndex === 0;
+                nextBtn.disabled = currentIndex === totalDots - 1;
+                
+                if (prevBtn.disabled) {
+                    prevBtn.style.opacity = '0.3';
+                    prevBtn.style.cursor = 'not-allowed';
+                } else {
+                    prevBtn.style.opacity = '1';
+                    prevBtn.style.cursor = 'pointer';
+                }
+                
+                if (nextBtn.disabled) {
+                    nextBtn.style.opacity = '0.3';
+                    nextBtn.style.cursor = 'not-allowed';
+                } else {
+                    nextBtn.style.opacity = '1';
+                    nextBtn.style.cursor = 'pointer';
+                }
+            }
+            
+            // Go to specific slide
+            function goToSlide(index) {
+                currentIndex = Math.max(0, Math.min(index, totalDots - 1));
+                const translateX = -currentIndex * (300 + 25) * itemsPerView;
+                galleryTrack.style.transform = `translateX(${translateX}px)`;
+                updateActiveState();
+            }
+            
+            // Next slide
+            function nextSlide() {
+                if (currentIndex < totalDots - 1) {
+                    goToSlide(currentIndex + 1);
+                }
+            }
+            
+            // Previous slide
+            function prevSlide() {
+                if (currentIndex > 0) {
+                    goToSlide(currentIndex - 1);
+                }
+            }
+            
+            // Event listeners
+            prevBtn.addEventListener('click', prevSlide);
+            nextBtn.addEventListener('click', nextSlide);
+            
+            // Keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft') prevSlide();
+                if (e.key === 'ArrowRight') nextSlide();
+            });
+            
+            // Touch/swipe support
+            let startX = 0;
+            let isDragging = false;
+            
+            galleryTrack.addEventListener('mousedown', (e) => {
+                startX = e.clientX;
+                isDragging = true;
+                galleryTrack.style.cursor = 'grabbing';
+            });
+            
+            galleryTrack.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                const currentX = e.clientX;
+                const diff = startX - currentX;
+                
+                if (Math.abs(diff) > 50) {
+                    if (diff > 0) nextSlide();
+                    else prevSlide();
+                    isDragging = false;
+                }
+            });
+            
+            galleryTrack.addEventListener('mouseup', () => {
+                isDragging = false;
+                galleryTrack.style.cursor = 'grab';
+            });
+            
+            galleryTrack.addEventListener('mouseleave', () => {
+                isDragging = false;
+                galleryTrack.style.cursor = 'grab';
+            });
+            
+            // Touch events
+            galleryTrack.addEventListener('touchstart', (e) => {
+                startX = e.touches[0].clientX;
+            });
+            
+            galleryTrack.addEventListener('touchmove', (e) => {
+                if (!startX) return;
+                const currentX = e.touches[0].clientX;
+                const diff = startX - currentX;
+                
+                if (Math.abs(diff) > 30) {
+                    if (diff > 0) nextSlide();
+                    else prevSlide();
+                    startX = null;
+                }
+            });
+            
+            // Initialize
+            updateActiveState();
+            
+            // Auto-scroll (optional)
+            let autoScrollInterval;
+            function startAutoScroll() {
+                autoScrollInterval = setInterval(() => {
+                    if (currentIndex === totalDots - 1) {
+                        goToSlide(0);
+                    } else {
+                        nextSlide();
+                    }
+                }, 5000);
+            }
+            
+            function stopAutoScroll() {
+                clearInterval(autoScrollInterval);
+            }
+            
+            // Start auto-scroll on load
+            startAutoScroll();
+            
+            // Pause auto-scroll on hover
+            galleryTrack.addEventListener('mouseenter', stopAutoScroll);
+            galleryTrack.addEventListener('mouseleave', startAutoScroll);
+            
+            // Pause on focus
+            galleryTrack.addEventListener('focus', stopAutoScroll, true);
+            galleryTrack.addEventListener('blur', startAutoScroll, true);
+        }
+        
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
@@ -1095,6 +1559,7 @@
         window.addEventListener('load', function() {
             createCitySkyline();
             createParticles();
+            initGallery();
             
             // Add active class to current section in view
             const observer = new IntersectionObserver((entries) => {
