@@ -117,6 +117,105 @@
         
         .logo {
             font-family: 'Playfair Display', serif;
+            /* DOWNLOAD CV BUTTON STYLES */
+.download-nav {
+    background: linear-gradient(45deg, var(--neon-pink), var(--cyber-purple));
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-weight: 600;
+    transition: all 0.3s;
+    box-shadow: 0 0 15px rgba(255, 0, 255, 0.3);
+    animation: button-pulse 2s infinite;
+}
+
+.download-nav:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(255, 0, 255, 0.6);
+    animation-play-state: paused;
+}
+
+@keyframes button-pulse {
+    0% { box-shadow: 0 0 15px rgba(255, 0, 255, 0.3); }
+    50% { box-shadow: 0 0 25px rgba(255, 0, 255, 0.6); }
+    100% { box-shadow: 0 0 15px rgba(255, 0, 255, 0.3); }
+}
+
+/* HERO BUTTONS */
+.hero-buttons {
+    margin-top: 40px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.hero-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 35px;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: 600;
+    transition: all 0.3s;
+    font-size: 1rem;
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-btn.primary {
+    background: linear-gradient(45deg, var(--neon-pink), var(--cyber-purple));
+    color: white;
+}
+
+.hero-btn.secondary {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--electric-blue);
+    border: 2px solid var(--electric-blue);
+}
+
+.hero-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(255, 0, 255, 0.3);
+}
+
+.hero-btn.secondary:hover {
+    background: rgba(0, 255, 255, 0.1);
+    border-color: var(--neon-pink);
+    color: var(--neon-pink);
+}
+
+.hero-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.hero-btn:hover::before {
+    left: 100%;
+}
+
+/* Responsive for navigation download button */
+@media (max-width: 768px) {
+    .download-nav {
+        padding: 6px 15px;
+        font-size: 0.9rem;
+    }
+    
+    .hero-buttons {
+        justify-content: center;
+    }
+    
+    .hero-btn {
+        padding: 12px 25px;
+        font-size: 0.9rem;
+    }
+}
             font-size: 2rem;
             font-weight: 800;
             background: linear-gradient(90deg, var(--neon-pink), var(--electric-blue));
