@@ -12,6 +12,7 @@
             --neon-pink: #ff00ff;
             --electric-blue: #00ffff;
             --cyber-purple: #9d00ff;
+            --sql-green: #00ff9d;
             --dark-bg: #0a0a1a;
             --card-bg: rgba(18, 18, 48, 0.8);
             --text-primary: rgba(255,255,255,0.95);
@@ -19,6 +20,7 @@
             --success-green: #00ff9d;
             --gradient-primary: linear-gradient(135deg, var(--neon-pink), var(--cyber-purple));
             --gradient-secondary: linear-gradient(135deg, var(--electric-blue), var(--cyber-purple));
+            --gradient-sql: linear-gradient(135deg, var(--sql-green), var(--electric-blue));
         }
         
         * { 
@@ -449,6 +451,26 @@
             transform: translateY(-3px);
             box-shadow: 0 10px 20px rgba(255, 0, 255, 0.3);
         }
+
+        /* Data Analyst specific button */
+        .data-analyst-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            background: var(--gradient-sql);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .data-analyst-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 255, 157, 0.3);
+        }
         
         /* Gallery */
         .gallery-grid {
@@ -757,7 +779,7 @@
         </div>
     </section>
 
-    <!-- Projects Section - ADDED -->
+    <!-- Projects Section -->
     <section id="projects">
         <div class="container">
             <div class="section-header">
@@ -765,6 +787,36 @@
             </div>
             
             <div class="projects-grid">
+                <!-- Data Analyst Project - ADDED -->
+                <div class="project-card animate-in">
+                    <img src="https://imgur.com/iRcVxxs.png" alt="Data Analyst Project" class="project-image">
+                    <div class="project-content">
+                        <h3 style="color: var(--electric-blue); margin-bottom: 1rem;">Data Analyst Project</h3>
+                        
+                        <p style="margin: 1rem 0;">
+                            A comprehensive Power BI dashboard built from SQL data to provide sales managers with real-time insights into customer behavior, product performance, and budget tracking.
+                        </p>
+                        
+                        <p style="font-style: italic; margin: 1.5rem 0;">
+                            This project demonstrates my ability to transform raw data into actionable business intelligence through SQL data extraction, Excel integration, and interactive dashboard creation.
+                        </p>
+                        
+                        <div class="project-tags">
+                            <span class="project-tag">Power BI</span>
+                            <span class="project-tag">SQL</span>
+                            <span class="project-tag">Data Analysis</span>
+                            <span class="project-tag">Excel</span>
+                            <span class="project-tag">Dashboard</span>
+                        </div>
+                        
+                        <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1.5rem;">
+                            <a href="https://decireedomanico.github.io/portfolio/executive-sales-dashboard.htmll" class="data-analyst-btn">
+                                <i class="fas fa-chart-line"></i> View Case Study
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
                 <!-- Mobile Gamer Hub -->
                 <div class="project-card animate-in">
                     <img src="https://i.imgur.com/ZlWda3X.png" alt="Mobile Gamer Hub Website" class="project-image">
@@ -792,55 +844,57 @@
                         </a>
                     </div>
                 </div>
+                
+                <!-- Graphic Design Portfolio -->
+                <div class="project-card animate-in">
+                    <div class="project-content">
+                        <h3 style="color: var(--electric-blue); margin-bottom: 1rem;">Graphic Design Portfolio</h3>
+                        
+                        <p style="font-style: italic; border-left: 3px solid var(--success-green); padding-left: 1rem; margin: 1.5rem 0;">
+                            I taught myself how to create graphic designs, digging deep into global trends and keyword data. This trained me to work with numbers and details for extended periods, research quickly and accurately, and solve problems logically.
+                        </p>
+                        
+                        <div class="gallery-grid">
+                            <div class="gallery-item">
+                                <img src="https://i.imgur.com/4VR0wpr.png" alt="Redbubble T-shirt Design">
+                            </div>
+                            <div class="gallery-item">
+                                <img src="https://i.imgur.com/wuNVuKd.jpeg" alt="Redbubble Hoodie Design">
+                            </div>
+                            <div class="gallery-item">
+                                <img src="https://i.imgur.com/gPeg41W.jpeg" alt="Facebook Ad Campaign">
+                            </div>
+                            <div class="gallery-item">
+                                <img src="https://i.imgur.com/veMfgdi.png" alt="Trend-Based Graphic Design">
+                            </div>
+                            <div class="gallery-item">
+                                <img src="https://i.imgur.com/l0X4Afn.png" alt="Keyword Optimized Design">
+                            </div>
+                            <div class="gallery-item">
+                                <img src="https://i.imgur.com/Zvdk2Gk.png" alt="Market Research Design">
+                            </div>
+                            <div class="gallery-item">
+                                <img src="https://i.imgur.com/b88J2xF.png" alt="Redbubble Marketplace Design">
+                            </div>
+                            <div class="gallery-item">
+                                <img src="https://i.imgur.com/FwJzJAL.jpeg" alt="Social Media Marketing Ad">
+                            </div>
+                        </div>
+                        
+                        <div class="project-tags">
+                            <span class="project-tag">Canva</span>
+                            <span class="project-tag">Graphic Design</span>
+                            <span class="project-tag">E-commerce</span>
+                            <span class="project-tag">Trend Research</span>
+                            <span class="project-tag">SEO Optimization</span>
+                            <span class="project-tag">Social Media Ads</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
-                <!-- Graphic Design Portfolio -->
-<div class="project-card animate-in">
-    <div class="project-content">
-        <h3 style="color: var(--electric-blue); margin-bottom: 1rem;">Graphic Design Portfolio</h3>
-        
-        <p style="font-style: italic; border-left: 3px solid var(--success-green); padding-left: 1rem; margin: 1.5rem 0;">
-            I taught myself how to create graphic designs, digging deep into global trends and keyword data. This trained me to work with numbers and details for extended periods, research quickly and accurately, and solve problems logically.
-        </p>
-        
-        <div class="gallery-grid">
-            <div class="gallery-item">
-                <img src="https://i.imgur.com/4VR0wpr.png" alt="Redbubble T-shirt Design">
-            </div>
-            <div class="gallery-item">
-                <img src="https://i.imgur.com/wuNVuKd.jpeg" alt="Redbubble Hoodie Design">
-            </div>
-            <div class="gallery-item">
-                <img src="https://i.imgur.com/gPeg41W.jpeg" alt="Facebook Ad Campaign">
-            </div>
-            <div class="gallery-item">
-                <img src="https://i.imgur.com/veMfgdi.png" alt="Trend-Based Graphic Design">
-            </div>
-            <div class="gallery-item">
-                <img src="https://i.imgur.com/l0X4Afn.png" alt="Keyword Optimized Design">
-            </div>
-            <div class="gallery-item">
-                <img src="https://i.imgur.com/Zvdk2Gk.png" alt="Market Research Design">
-            </div>
-            <div class="gallery-item">
-                <img src="https://i.imgur.com/b88J2xF.png" alt="Redbubble Marketplace Design">
-            </div>
-            <div class="gallery-item">
-                <img src="https://i.imgur.com/FwJzJAL.jpeg" alt="Social Media Marketing Ad">
-            </div>
-        </div>
-        
-        <div class="project-tags">
-            <span class="project-tag">Canva</span>
-            <span class="project-tag">Graphic Design</span>
-            <span class="project-tag">E-commerce</span>
-            <span class="project-tag">Trend Research</span>
-            <span class="project-tag">SEO Optimization</span>
-            <span class="project-tag">Social Media Ads</span>
-        </div>
-    </div>
-</div>
+
     <!-- Education Section -->
     <section id="education" style="background: rgba(157, 0, 255, 0.03);">
         <div class="container">
@@ -905,7 +959,7 @@
         </div>
     </section>
 
-    <!-- Skills Section -->
+    <!-- Skills Section - Updated to include Data Analytics -->
     <section id="skills">
         <div class="container">
             <div class="section-header">
@@ -932,6 +986,9 @@
                     <div class="skill-tags">
                         <span class="skill-tag">Microsoft Office</span>
                         <span class="skill-tag">Data Analysis</span>
+                        <span class="skill-tag">Power BI</span>
+                        <span class="skill-tag">SQL</span>
+                        <span class="skill-tag">Excel</span>
                         <span class="skill-tag">Canva</span>
                         <span class="skill-tag">SEO Optimization</span>
                         <span class="skill-tag">Social Media Management</span>
@@ -960,7 +1017,7 @@
                         <i class="fas fa-envelope"></i>
                     </div>
                     <h3>Email</h3>
-                    <p style="margin: 1rem 0; color: var(--text-secondary);"></p>
+                    <p style="margin: 1rem 0; color: var(--text-secondary);">decireedomanico1@gmail.com</p>
                     <a href="mailto:decireedomanico1@gmail.com" class="btn" style="background: transparent; border: 2px solid var(--electric-blue); color: var(--electric-blue); padding: 0.8rem 1.8rem; font-size: 0.9rem;">
                         Send Message
                     </a>
@@ -971,7 +1028,7 @@
                         <i class="fas fa-phone"></i>
                     </div>
                     <h3>Phone</h3>
-                    <p style="margin: 1rem 0; color: var(--text-secondary);"></p>
+                    <p style="margin: 1rem 0; color: var(--text-secondary);">+63 962 647 8951</p>
                     <a href="tel:+639626478951" class="btn" style="background: transparent; border: 2px solid var(--electric-blue); color: var(--electric-blue); padding: 0.8rem 1.8rem; font-size: 0.9rem;">
                         Call Now
                     </a>
