@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Data Analyst Project: Executive Sales Performance Dashboard by Deciree Domanico">
+    <title>Data Analyst Project | Deciree Domanico</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Source+Code+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --neon-pink: #ff00ff;
+            --electric-blue: #00ffff;
+            --cyber-purple: #9d00ff;
+            --sql-green: #00ff9d;
+            --excel-green: #217346;
+            --dark-bg: #0a0a1a;
+            --card-bg: rgba(18, 18, 48, 0.8);
+            --code-bg: rgba(10, 15, 35, 0.9);
+            --text-primary: rgba(255,255,255,0.95);
+            --text-secondary: rgba(255,255,255,0.7);
+            --gradient-primary: linear-gradient(135deg, var(--neon-pink), var(--cyber-purple));
+            --gradient-secondary: linear-gradient(135deg, var(--electric-blue), var(--cyber-purple));
+            --gradient-sql: linear-gradient(135deg, var(--sql-green), var(--electric-blue));
+            --gradient-excel: linear-gradient(135deg, var(--excel-green), var(--electric-blue));
+        }
+        
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
+        
+        body {
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+            font-size: 16px;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Animated Background with SQL Theme */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255, 0, 255, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0, 255, 255, 0.05) 0%, transparent 50%),
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 255, 157, 0.02) 2px, rgba(0, 255, 157, 0.02) 4px);
+            animation: bg-pulse 20s ease-in-out infinite;
+        }
+        
+        @keyframes bg-pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+        
+        /* Typography */
+        h1, h2, h3, h4 { 
+            font-family: 'Poppins', sans-serif; 
+            font-weight: 600; 
+            line-height: 1.3; 
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            background: var(--gradient-sql);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            color: var(--electric-blue);
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--gradient-sql);
+            border-radius: 2px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        /* Header */
+        header {
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            background: rgba(10, 10, 26, 0.95);
+            backdrop-filter: blur(15px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 255, 255, 0.1);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            align-items: center;
+        }
+        
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+        
+        nav a:hover {
+            color: var(--sql-green);
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-sql);
+            transition: width 0.3s ease;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        /* Hero Section for Project */
+        .project-hero {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding: 4rem 0;
+            text-align: center;
+        }
+        
+        .project-hero-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .project-tag {
+            display: inline-block;
+            background: rgba(0, 255, 157, 0.1);
+            color: var(--sql-green);
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(0, 255, 157, 0.3);
+        }
+        
+        .project-overview {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 255, 157, 0.1);
+            backdrop-filter: blur(10px);
+            margin: 3rem 0;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .project-overview::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--gradient-sql);
+        }
+        
+        .project-overview p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            color: var(--text-secondary);
+        }
+        
+        /* Solution Overview */
+        .solution-overview {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 255, 157, 0.1);
+            backdrop-filter: blur(10px);
+            margin: 3rem 0;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .solution-overview::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--gradient-excel);
+        }
+        
+        .solution-overview p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            color: var(--text-secondary);
+        }
+        
+        /* User Stories Table */
+        .table-container {
+            overflow-x: auto;
+            margin: 2rem 0;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 255, 157, 0.2);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--code-bg);
+        }
+        
+        th {
+            background: rgba(0, 255, 157, 0.1);
+            color: var(--sql-green);
+            padding: 1.2rem;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid rgba(0, 255, 157, 0.3);
+        }
+        
+        td {
+            padding: 1.2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
+        }
+        
+        tr:hover {
+            background: rgba(0, 255, 157, 0.05);
+        }
+        
+        /* SQL Code Blocks */
+        .sql-section {
+            margin: 4rem 0;
+        }
+        
+        .sql-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .sql-title i {
+            color: var(--sql-green);
+            font-size: 1.5rem;
+        }
+        
+        .code-block {
+            background: var(--code-bg);
+            border-radius: 10px;
+            border: 1px solid rgba(0, 255, 157, 0.2);
+            padding: 1.5rem;
+            overflow-x: auto;
+            font-family: 'Source Code Pro', monospace;
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+        
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .code-header h4 {
+            color: var(--sql-green);
+            font-family: 'Source Code Pro', monospace;
+            font-weight: 600;
+        }
+        
+        .copy-btn {
+            background: rgba(0, 255, 157, 0.1);
+            color: var(--sql-green);
+            border: 1px solid rgba(0, 255, 157, 0.3);
+            border-radius: 5px;
+            padding: 0.4rem 0.8rem;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .copy-btn:hover {
+            background: rgba(0, 255, 157, 0.2);
+        }
+        
+        .code-content {
+            color: #e0e0e0;
+            line-height: 1.6;
+            font-size: 0.9rem;
+            white-space: pre;
+            tab-size: 2;
+        }
+        
+        .sql-comment {
+            color: #6a9955;
+        }
+        
+        .sql-keyword {
+            color: #569cd6;
+        }
+        
+        .sql-function {
+            color: #dcdcaa;
+        }
+        
+        .sql-string {
+            color: #ce9178;
+        }
+        
+        /* Data Model & Dashboard Sections */
+        .visual-section {
+            margin: 4rem 0;
+        }
+        
+        .visual-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+        
+        .visual-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(0, 255, 157, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .visual-image {
+            width: 100%;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 255, 157, 0.2);
+            margin: 1.5rem 0;
+            transition: transform 0.3s ease;
+        }
+        
+        .visual-image:hover {
+            transform: scale(1.02);
+        }
+        
+        .image-caption {
+            text-align: center;
+            color: var(--text-secondary);
+            font-style: italic;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        /* Tools & Skills */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .tool-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            border: 1px solid rgba(0, 255, 157, 0.1);
+            transition: all 0.3s;
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--sql-green);
+            box-shadow: 0 10px 25px rgba(0, 255, 157, 0.1);
+        }
+        
+        .tool-card i {
+            font-size: 2.5rem;
+            color: var(--sql-green);
+            margin-bottom: 1rem;
+        }
+        
+        .tool-card.excel i {
+            color: var(--excel-green);
+        }
+        
+        .tool-card.powerbi i {
+            color: #f2c811;
+        }
+        
+        .tool-card.sql i {
+            color: var(--sql-green);
+        }
+        
+        /* Interactive Button */
+        .interactive-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1rem 2.5rem;
+            background: var(--gradient-sql);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            margin: 1.5rem 0;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .interactive-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 255, 157, 0.3);
+        }
+        
+        /* Footer */
+        footer {
+            padding: 3rem 0;
+            border-top: 1px solid rgba(0, 255, 157, 0.1);
+            text-align: center;
+            background: rgba(10, 10, 26, 0.5);
+            margin-top: 4rem;
+        }
+        
+        .back-to-portfolio {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1rem 2rem;
+            background: var(--gradient-sql);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            margin-top: 2rem;
+            transition: all 0.3s;
+        }
+        
+        .back-to-portfolio:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 255, 157, 0.3);
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            h1 { font-size: 3rem; }
+            h2 { font-size: 2.2rem; }
+            .container { padding: 0 1.5rem; }
+            .project-hero { min-height: 50vh; padding: 3rem 0; }
+        }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 1.8rem; }
+            nav { gap: 1.5rem; flex-wrap: wrap; }
+            .project-overview, .solution-overview { padding: 1.5rem; }
+            th, td { padding: 0.8rem; font-size: 0.9rem; }
+        }
+        
+        @media (max-width: 480px) {
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.5rem; }
+            .code-block { padding: 1rem; }
+            .code-content { font-size: 0.8rem; }
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-in {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg"></div>
+    
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html"><i class="fas fa-home"></i> Portfolio Home</a>
+                <a href="data-analyst-projects.html"><i class="fas fa-project-diagram"></i> All Projects</a>
+                <a href="#overview">Project Overview</a>
+                <a href="#solution">Solution Design</a>
+                <a href="#sql">SQL Code</a>
+                <a href="#visuals">Dashboard</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Project Hero Section -->
+    <section id="overview" class="project-hero">
+        <div class="container">
+            <div class="project-hero-content animate-in">
+                <div class="project-tag">
+                    <i class="fas fa-database"></i> Data Analyst Project
+                </div>
+                <h1>Executive Sales Performance Dashboard</h1>
+                <p style="color: var(--electric-blue); font-size: 1.2rem; max-width: 800px; margin: 0 auto 2rem;">
+                    Transforming raw data into actionable business insights through SQL, Power BI, Excel, and data modeling.
+                </p>
+                
+                <div class="project-overview">
+                    <p>The business request for this data analyst project was to develop an executive sales report for sales managers. The goal was to transition from static reporting to a dynamic, interactive dashboard that provides real-time insights into sales performance, customer behavior, and product trends.</p>
+                    <p>Based on the initial request, the following user stories were defined to guide the project delivery and ensure the acceptance criteria were met.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Design Section -->
+    <section id="solution" style="background: rgba(0, 255, 157, 0.03);">
+        <div class="container">
+            <div class="section-header animate-in">
+                <h2>Solution Design</h2>
+            </div>
+            
+            <div class="solution-overview animate-in">
+                <p>I designed and built a Power BI reporting solution focused on Internet Sales performance for both Sales Managers and Sales Representatives. The solution includes a consolidated executive dashboard showing key KPIs, top customers, and product trends, with automated daily refresh from the CRM.</p>
+                <p>It also provides interactive drill-through report pages that allow sales reps to filter and analyze sales per customer (purchase history and upsell opportunities) and per product (high-demand items, categories, and trend analysis). In addition, I created a performance tracking dashboard that compares actual sales versus budget over time using KPI cards and time-series visuals to support forecasting and progress monitoring.</p>
+            </div>
+            
+            <!-- User Stories Table - ADDED BACK -->
+            <div class="table-container animate-in">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>As a (role)</th>
+                            <th>I want (request / demand)</th>
+                            <th>So that I (user value)</th>
+                            <th>Acceptance Criteria</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Sales Manager</td>
+                            <td>A consolidated dashboard overview of internet sales</td>
+                            <td>I can quickly identify top-performing customers and product trends to inform strategy.</td>
+                            <td>A Power BI dashboard with core KPIs and visuals, refreshed automatically from the CRM once daily.</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Sales Representative</td>
+                            <td>A detailed, filterable overview of Internet Sales per Customer</td>
+                            <td>I can monitor my accounts' purchase history and identify clear upsell opportunities.</td>
+                            <td>A Power BI report page that allows me to drill down and filter all data for any specific customer.</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Sales Representative</td>
+                            <td>A detailed, filterable overview of Internet Sales per Product</td>
+                            <td>I can focus my efforts on high-demand products and analyze sales trends.</td>
+                            <td>A Power BI report page that allows me to filter and analyze sales performance for any product or category.</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Sales Manager</td>
+                            <td>A dashboard tracking sales performance over time against budget</td>
+                            <td>I can measure our progress toward fiscal goals and forecast accurately.</td>
+                            <td>A Power BI dashboard with time-series graphs and KPI cards comparing actual sales to budgeted targets.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- SQL Code Section -->
+    <section id="sql" style="background: rgba(0, 255, 157, 0.03);">
+        <div class="container">
+            <div class="section-header animate-in">
+                <h2>Data Cleansing & Transformation (SQL)</h2>
+                <p style="max-width: 800px; margin: 0 auto; color: var(--text-secondary);">
+                    To build the necessary data model for analysis, key tables were extracted and cleansed from the relational database using SQL. The budget data was provided separately in an Excel file and integrated during the data modeling stage in Power BI.
+                </p>
+            </div>
+            
+            <!-- SQL Interface Screenshot -->
+            <div class="visual-section animate-in">
+                <div class="visual-card">
+                    <h3 style="color: var(--electric-blue); margin-bottom: 1rem;">SQL Development Environment</h3>
+                    <p>Below is a screenshot of the SQL development environment showing the data transformation process:</p>
+                    <img src="https://i.imgur.com/TJtzwIL.png" alt="SQL Development Interface" class="visual-image">
+                    <p class="image-caption">SQL Server Management Studio interface with transformation scripts</p>
+                </div>
+            </div>
+            
+            <!-- DIM_Products -->
+            <div class="sql-section animate-in">
+                <div class="sql-title">
+                    <i class="fas fa-table"></i>
+                    <h3>DIM_Products Table</h3>
+                </div>
+                <div class="code-block">
+                    <div class="code-header">
+                        <h4>SQL Transformation for Product Dimension</h4>
+                        <button class="copy-btn" onclick="copyCode('code1')">
+                            <i class="far fa-copy"></i> Copy Code
+                        </button>
+                    </div>
+                    <pre id="code1" class="code-content"><span class="sql-keyword">USE</span> [AdventureWorksDW2024]
+<span class="sql-keyword">GO</span>
+
+<span class="sql-comment">-- Cleansed DIM_Products Table --</span>
+<span class="sql-keyword">SELECT</span> 
+  p.[ProductKey], 
+  p.[ProductAlternateKey] <span class="sql-keyword">AS</span> ProductItemCode, 
+  <span class="sql-comment">---      ,[ProductSubcategoryKey]</span>
+  <span class="sql-comment">---      ,[WeightUnitMeasureCode]</span>
+  <span class="sql-comment">---      ,[SizeUnitMeasureCode] </span>
+  p.[EnglishProductName] <span class="sql-keyword">AS</span> [Product Name], 
+  ps.EnglishProductSubcategoryName <span class="sql-keyword">AS</span> [Sub Category], <span class="sql-comment">--- Joined in from Sub Category Table</span>
+  pc.EnglishProductCategoryName <span class="sql-keyword">AS</span> [Product Category], <span class="sql-comment">--- Joined in from Category Table</span>
+  <span class="sql-comment">---      ,[SpanishProductName]</span>
+  <span class="sql-comment">---      ,[FrenchProductName]</span>
+  <span class="sql-comment">---      ,[StandardCost]</span>
+  <span class="sql-comment">---      ,[FinishedGoodsFlag] </span>
+  p.[Color] <span class="sql-keyword">AS</span> [Product Color], 
+  <span class="sql-comment">---      ,[SafetyStockLevel]</span>
+  <span class="sql-comment">---      ,[ReorderPoint]</span>
+  <span class="sql-comment">---      ,[ListPrice] </span>
+  p.[Size] <span class="sql-keyword">AS</span> [Product Size], 
+  <span class="sql-comment">---      ,[SizeRange]</span>
+  <span class="sql-comment">---      ,[Weight]</span>
+  <span class="sql-comment">---      ,[DaysToManufacture]</span>
+  p.[ProductLine] <span class="sql-keyword">AS</span> [Product Line], 
+  <span class="sql-comment">---     ,[DealerPrice]</span>
+  <span class="sql-comment">---      ,[Class]</span>
+  <span class="sql-comment">---      ,[Style] </span>
+  p.[ModelName] <span class="sql-keyword">AS</span> [Product Model Name], 
+  <span class="sql-comment">---      ,[LargePhoto]</span>
+  p.[EnglishDescription] <span class="sql-keyword">AS</span> [Product Description], 
+  <span class="sql-comment">---      ,[FrenchDescription]</span>
+  <span class="sql-comment">---      ,[ChineseDescription]</span>
+  <span class="sql-comment">---      ,[ArabicDescription]</span>
+  <span class="sql-comment">---      ,[HebrewDescription]</span>
+  <span class="sql-comment">---      ,[ThaiDescription]</span>
+  <span class="sql-comment">---      ,[GermanDescription]</span>
+  <span class="sql-comment">---      ,[JapaneseDescription]</span>
+  <span class="sql-comment">---      ,[TurkishDescription]</span>
+  <span class="sql-comment">---      ,[StartDate]</span>
+  <span class="sql-comment">---      ,[EndDate]</span>
+  <span class="sql-function">ISNULL</span> (p.Status, <span class="sql-string">'Outdated'</span>) <span class="sql-keyword">AS</span> [Product Status] 
+<span class="sql-keyword">FROM</span> 
+  [AdventureWorksDW2024].[dbo].[DimProduct] <span class="sql-keyword">as</span> p
+  <span class="sql-keyword">LEFT JOIN</span> dbo.DimProductSubcategory <span class="sql-keyword">AS</span> ps <span class="sql-keyword">ON</span> ps.ProductSubcategoryKey = p.ProductSubcategoryKey 
+  <span class="sql-keyword">LEFT JOIN</span> dbo.DimProductCategory <span class="sql-keyword">AS</span> pc <span class="sql-keyword">ON</span> ps.ProductCategoryKey = pc.ProductCategoryKey 
+<span class="sql-keyword">ORDER BY</span> 
+  p.ProductKey <span class="sql-keyword">asc</span></pre>
+                </div>
+            </div>
+            
+            <!-- DIM_Customers -->
+            <div class="sql-section animate-in">
+                <div class="sql-title">
+                    <i class="fas fa-users"></i>
+                    <h3>DIM_Customers Table</h3>
+                </div>
+                <div class="code-block">
+                    <div class="code-header">
+                        <h4>SQL Transformation for Customer Dimension</h4>
+                        <button class="copy-btn" onclick="copyCode('code2')">
+                            <i class="far fa-copy"></i> Copy Code
+                        </button>
+                    </div>
+                    <pre id="code2" class="code-content"><span class="sql-keyword">USE</span> [AdventureWorksDW2019]
+<span class="sql-keyword">GO</span>
+<span class="sql-comment">-- Cleansed DIM_Customers Table --</span>
+<span class="sql-keyword">SELECT</span> 
+  c.customerkey <span class="sql-keyword">AS</span> CustomerKey, 
+  <span class="sql-comment">---      ,[GeographyKey]</span>
+  <span class="sql-comment">---      ,[CustomerAlternateKey]</span>
+  <span class="sql-comment">---      ,[Title]</span>
+  c.firstname <span class="sql-keyword">AS</span> [First Name], 
+  <span class="sql-comment">---      ,[MiddleName]</span>
+  c.lastname <span class="sql-keyword">AS</span> [Last Name], 
+  c.firstname + <span class="sql-string">' '</span> + lastname <span class="sql-keyword">AS</span> [Full Name], 
+  <span class="sql-comment">--- Combined First and Last Name</span>
+  <span class="sql-comment">---      ,[NameStyle]</span>
+  <span class="sql-comment">---      ,[BirthDate]</span>
+  <span class="sql-comment">---      ,[MaritalStatus]</span>
+  <span class="sql-comment">---      ,[Suffix]</span>
+  <span class="sql-keyword">CASE</span> c.gender <span class="sql-keyword">WHEN</span> <span class="sql-string">'M'</span> <span class="sql-keyword">THEN</span> <span class="sql-string">'Male'</span> <span class="sql-keyword">WHEN</span> <span class="sql-string">'F'</span> <span class="sql-keyword">THEN</span> <span class="sql-string">'Female'</span> <span class="sql-keyword">END</span> <span class="sql-keyword">AS</span> Gender,
+  <span class="sql-comment">---      ,[EmailAddress]</span>
+  <span class="sql-comment">---      ,[YearlyIncome]</span>
+  <span class="sql-comment">---      ,[TotalChildren]</span>
+  <span class="sql-comment">---      ,[NumberChildrenAtHome]</span>
+  <span class="sql-comment">---      ,[EnglishEducation]</span>
+  <span class="sql-comment">---      ,[SpanishEducation]</span>
+  <span class="sql-comment">---      ,[FrenchEducation]</span>
+  <span class="sql-comment">---      ,[EnglishOccupation]</span>
+  <span class="sql-comment">---      ,[SpanishOccupation]</span>
+  <span class="sql-comment">---      ,[FrenchOccupation]</span>
+  <span class="sql-comment">---      ,[HouseOwnerFlag]</span>
+  <span class="sql-comment">---      ,[NumberCarsOwned]</span>
+  <span class="sql-comment">---      ,[AddressLine1]</span>
+  <span class="sql-comment">---      ,[AddressLine2]</span>
+  <span class="sql-comment">---      ,[Phone]</span>
+  c.datefirstpurchase <span class="sql-keyword">AS</span> DateFirstPurchase, 
+  <span class="sql-comment">---      ,[CommuteDistance]</span>
+  g.city <span class="sql-keyword">AS</span> [Customer City] <span class="sql-comment">--- Joined in Customer City from Geography Table</span>
+<span class="sql-keyword">FROM</span> 
+  [AdventureWorksDW2019].[dbo].[DimCustomer] <span class="sql-keyword">as</span> c
+  <span class="sql-keyword">LEFT JOIN</span> dbo.dimgeography <span class="sql-keyword">AS</span> g <span class="sql-keyword">ON</span> g.geographykey = c.geographykey 
+<span class="sql-keyword">ORDER BY</span> 
+  CustomerKey <span class="sql-keyword">ASC</span> <span class="sql-comment">--- Ordered List by CustomerKey</span></pre>
+                </div>
+            </div>
+            
+            <!-- DIM_Date -->
+            <div class="sql-section animate-in">
+                <div class="sql-title">
+                    <i class="far fa-calendar-alt"></i>
+                    <h3>DIM_Date Table</h3>
+                </div>
+                <div class="code-block">
+                    <div class="code-header">
+                        <h4>SQL Transformation for Date Dimension</h4>
+                        <button class="copy-btn" onclick="copyCode('code3')">
+                            <i class="far fa-copy"></i> Copy Code
+                        </button>
+                    </div>
+                    <pre id="code3" class="code-content"><span class="sql-comment">-- Cleansed DIM_Date Table --</span>
+<span class="sql-keyword">SELECT</span> 
+  [DateKey], 
+  [FullDateAlternateKey] <span class="sql-keyword">AS</span> Date, 
+  <span class="sql-comment">---[DayNumberOfWeek], </span>
+  [EnglishDayNameOfWeek] <span class="sql-keyword">AS</span> Day, 
+  <span class="sql-comment">---[SpanishDayNameOfWeek], </span>
+  <span class="sql-comment">---[FrenchDayNameOfWeek], </span>
+  <span class="sql-comment">---[DayNumberOfMonth], </span>
+  <span class="sql-comment">---[DayNumberOfYear], </span>
+  <span class="sql-comment">---[WeekNumberOfYear],</span>
+  [EnglishMonthName] <span class="sql-keyword">AS</span> Month, 
+  <span class="sql-function">Left</span>([EnglishMonthName], <span class="sql-number">3</span>) <span class="sql-keyword">AS</span> MonthShort,   <span class="sql-comment">--- Useful for front end date navigation and front end graphs.</span>
+  <span class="sql-comment">---[SpanishMonthName], </span>
+  <span class="sql-comment">---[FrenchMonthName], </span>
+  [MonthNumberOfYear] <span class="sql-keyword">AS</span> MonthNo, 
+  [CalendarQuarter] <span class="sql-keyword">AS</span> Quarter, 
+  [CalendarYear] <span class="sql-keyword">AS</span> Year <span class="sql-comment">---[CalendarSemester], </span>
+  <span class="sql-comment">---[FiscalQuarter], </span>
+  <span class="sql-comment">---[FiscalYear], </span>
+  <span class="sql-comment">---[FiscalSemester] </span>
+<span class="sql-keyword">FROM</span> 
+ [AdventureWorksDW2024].[dbo].[DimDate]
+<span class="sql-keyword">WHERE</span> 
+  CalendarYear >= <span class="sql-number">2024</span></pre>
+                </div>
+            </div>
+            
+            <!-- FACT_InternetSales -->
+            <div class="sql-section animate-in">
+                <div class="sql-title">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>FACT_InternetSales Table</h3>
+                </div>
+                <div class="code-block">
+                    <div class="code-header">
+                        <h4>SQL Transformation for Sales Fact Table</h4>
+                        <button class="copy-btn" onclick="copyCode('code4')">
+                            <i class="far fa-copy"></i> Copy Code
+                        </button>
+                    </div>
+                    <pre id="code4" class="code-content"><span class="sql-comment">-- Cleansed FACT_InternetSales Table --</span>
+<span class="sql-keyword">SELECT</span> 
+  [ProductKey], 
+  [OrderDateKey], 
+  [DueDateKey], 
+  [ShipDateKey], 
+  [CustomerKey], 
+  <span class="sql-comment">---  ,[PromotionKey]</span>
+  <span class="sql-comment">---  ,[CurrencyKey]</span>
+  <span class="sql-comment">---  ,[SalesTerritoryKey]</span>
+  [SalesOrderNumber], 
+  <span class="sql-comment">---  [SalesOrderLineNumber], </span>
+  <span class="sql-comment">---  ,[RevisionNumber]</span>
+  <span class="sql-comment">---  ,[OrderQuantity], </span>
+  <span class="sql-comment">---  ,[UnitPrice], </span>
+  <span class="sql-comment">---  ,[ExtendedAmount]</span>
+  <span class="sql-comment">---  ,[UnitPriceDiscountPct]</span>
+  <span class="sql-comment">---  ,[DiscountAmount] </span>
+  <span class="sql-comment">---  ,[ProductStandardCost]</span>
+  <span class="sql-comment">---  ,[TotalProductCost] </span>
+  [SalesAmount] <span class="sql-comment">---  ,[TaxAmt]</span>
+  <span class="sql-comment">---  ,[Freight]</span>
+  <span class="sql-comment">---  ,[CarrierTrackingNumber] </span>
+  <span class="sql-comment">---  ,[CustomerPONumber] </span>
+  <span class="sql-comment">---  ,[OrderDate] </span>
+  <span class="sql-comment">---  ,[DueDate] </span>
+  <span class="sql-comment">---  ,[ShipDate] </span>
+<span class="sql-keyword">FROM</span> 
+  [AdventureWorksDW2019].[dbo].[FactInternetSales]
+<span class="sql-keyword">WHERE</span> 
+  <span class="sql-function">LEFT</span> (OrderDateKey, <span class="sql-number">4</span>) >= <span class="sql-function">YEAR</span>(<span class="sql-function">GETDATE</span>()) -<span class="sql-number">2</span> <span class="sql-comment">--- Ensures we always only bring two years of date from extraction.</span>
+<span class="sql-keyword">ORDER BY</span>
+  OrderDateKey <span class="sql-keyword">ASC</span></pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Data Model & Dashboard Sections -->
+    <section id="visuals">
+        <div class="container">
+            <div class="section-header animate-in">
+                <h2>Data Visualization & Dashboard</h2>
+            </div>
+            
+            <!-- Data Model -->
+            <div class="visual-section animate-in">
+                <h3 style="color: var(--electric-blue); margin-bottom: 1.5rem;">Power BI Data Model</h3>
+                <div class="visual-card">
+                    <p>The image below shows the data model implemented in Power BI. It illustrates how the core <code>FACT_InternetSales</code> table relates to the dimension tables and how the <code>FACT_Budget</code> table (sourced from Excel) is integrated for comparative analysis.</p>
+                    <img src="https://i.imgur.com/QlGXCyR.png" alt="Power BI Data Model" class="visual-image">
+                    <p class="image-caption">Power BI data model showing table relationships including Excel-based budget data</p>
+                </div>
+            </div>
+            
+            <!-- Dashboard -->
+            <div class="visual-section animate-in">
+                <h3 style="color: var(--electric-blue); margin-bottom: 1.5rem;">Sales Management Dashboard</h3>
+                <div class="visual-card">
+                    <p>This Power BI sales dashboard consists of a primary overview page and two detailed analysis pages, delivering insights into sales trends, customer performance, and product analytics.</p>
+                    <img src="https://i.imgur.com/IHLgnuZ.png" alt="Sales Performance Dashboard" class="visual-image">
+                    <p class="image-caption">Executive Sales Dashboard with KPIs, trends, and interactive filters</p>
+                    
+                    <!-- LIVE DASHBOARD LINK ADDED HERE -->
+                    <div style="text-align: center; margin: 2rem 0;">
+                        <a href="https://app.powerbi.com/links/3xWMcp-nM6?ctid=8910fec7-04d2-4806-8ce3-da56c923162f&pbi_source=linkShare" 
+                           target="_blank" 
+                           class="interactive-btn">
+                            <i class="fas fa-external-link-alt"></i> View Live Interactive Dashboard
+                        </a>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.5rem;">
+                            Click to explore the live Power BI dashboard with interactive filters and drill-down capabilities
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Table View -->
+            <div class="visual-section animate-in">
+                <h3 style="color: var(--electric-blue); margin-bottom: 1.5rem;">Data Table View</h3>
+                <div class="visual-card">
+                    <p>Below is a view of the cleaned data tables in Power BI, showing the structured and transformed data ready for analysis and visualization.</p>
+                    <img src="https://i.imgur.com/pw9iRk2.png" alt="Data Table View" class="visual-image">
+                    <p class="image-caption">Cleaned and transformed data tables in Power BI</p>
+                </div>
+            </div>
+            
+            <!-- Tools & Skills -->
+            <div class="visual-section animate-in">
+                <h3 style="color: var(--electric-blue); margin-bottom: 1.5rem;">Tools & Technologies Used</h3>
+                <div class="tools-grid">
+                    <div class="tool-card sql">
+                        <i class="fas fa-database"></i>
+                        <h4>SQL Server</h4>
+                        <p>Data extraction & transformation</p>
+                    </div>
+                    <div class="tool-card powerbi">
+                        <i class="fas fa-chart-line"></i>
+                        <h4>Power BI</h4>
+                        <p>Data modeling & visualization</p>
+                    </div>
+                    <div class="tool-card excel">
+                        <i class="fas fa-file-excel"></i>
+                        <h4>Microsoft Excel</h4>
+                        <p>Budget data preparation & integration</p>
+                    </div>
+                    <div class="tool-card">
+                        <i class="fas fa-cube"></i>
+                        <h4>Data Modeling</h4>
+                        <p>Table relationships & schema design</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div style="font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 800; background: var(--gradient-sql); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1rem;">
+                Data Analyst Project
+            </div>
+            
+            <p style="color: var(--text-secondary); max-width: 800px; margin: 0 auto 2rem;">
+                This project demonstrates end-to-end data analysis skills: from SQL data extraction and transformation to Power BI dashboard creation with Excel integration for budget analysis.
+            </p>
+            
+            <div style="display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;">
+                <a href="index.html" class="back-to-portfolio">
+                    <i class="fas fa-arrow-left"></i> Back to Portfolio
+                </a>
+                <a href="data-analyst-projects.html" class="back-to-portfolio" style="background: var(--gradient-secondary);">
+                    <i class="fas fa-project-diagram"></i> View All Projects
+                </a>
+            </div>
+            
+            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 2rem;">
+                © 2025 Deciree France P. Domanico | Data Analyst Portfolio Project
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                if(this.getAttribute('href').startsWith('#')) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if(targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        });
+
+        // Copy code functionality
+        function copyCode(elementId) {
+            const codeElement = document.getElementById(elementId);
+            const textArea = document.createElement('textarea');
+            textArea.value = codeElement.textContent;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            
+            // Visual feedback
+            const button = event.target.closest('.copy-btn');
+            const originalText = button.innerHTML;
+            button.innerHTML = '<i class="fas fa-check"></i> Copied!';
+            setTimeout(() => {
+                button.innerHTML = originalText;
+            }, 2000);
+        }
+
+        // Syntax highlighting helper
+        function highlightSQL(text) {
+            return text
+                .replace(/(SELECT|FROM|WHERE|JOIN|ON|AS|ORDER BY|GROUP BY|LEFT|RIGHT|INNER|OUTER|CASE|WHEN|THEN|END|ISNULL|GETDATE|YEAR|LEFT)\b/gi, '<span class="sql-keyword">$1</span>')
+                .replace(/(USE|GO)\b/gi, '<span class="sql-keyword">$1</span>')
+                .replace(/(\d+)/g, '<span class="sql-number">$1</span>')
+                .replace(/(--.*?---.*?(\n|$))/g, '<span class="sql-comment">$1</span>')
+                .replace(/'([^']*)'/g, '<span class="sql-string">\'$1\'</span>');
+        }
+
+        // Apply syntax highlighting on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const codeElements = document.querySelectorAll('.code-content');
+            codeElements.forEach(el => {
+                const original = el.innerHTML;
+                el.innerHTML = highlightSQL(original);
+            });
+            
+            // Add current year to footer
+            const yearElement = document.querySelector('footer p');
+            if(yearElement) {
+                yearElement.innerHTML = yearElement.innerHTML.replace('2025', new Date().getFullYear());
+            }
+        });
+
+        // Scroll animation
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        // Observe all elements with animate-in class
+        document.querySelectorAll('.animate-in').forEach((el) => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
