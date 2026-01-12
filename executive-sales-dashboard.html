@@ -232,39 +232,6 @@
             color: var(--text-secondary);
         }
         
-        /* User Stories Table */
-        .table-container {
-            overflow-x: auto;
-            margin: 2rem 0;
-            border-radius: 10px;
-            border: 1px solid rgba(0, 255, 157, 0.2);
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: var(--code-bg);
-        }
-        
-        th {
-            background: rgba(0, 255, 157, 0.1);
-            color: var(--sql-green);
-            padding: 1.2rem;
-            text-align: left;
-            font-weight: 600;
-            border-bottom: 2px solid rgba(0, 255, 157, 0.3);
-        }
-        
-        td {
-            padding: 1.2rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--text-secondary);
-        }
-        
-        tr:hover {
-            background: rgba(0, 255, 157, 0.05);
-        }
-        
         /* SQL Code Blocks */
         .sql-section {
             margin: 4rem 0;
@@ -366,11 +333,15 @@
             backdrop-filter: blur(10px);
         }
         
+        /* UPDATED: Smaller images that aren't blurry */
         .visual-image {
-            width: 100%;
+            max-width: 100%;
+            width: 800px;
+            height: auto;
             border-radius: 10px;
             border: 1px solid rgba(0, 255, 157, 0.2);
-            margin: 1.5rem 0;
+            margin: 1.5rem auto;
+            display: block;
             transition: transform 0.3s ease;
         }
         
@@ -483,6 +454,7 @@
             h2 { font-size: 2.2rem; }
             .container { padding: 0 1.5rem; }
             .project-hero { min-height: 50vh; padding: 3rem 0; }
+            .visual-image { width: 90%; }
         }
         
         @media (max-width: 768px) {
@@ -490,7 +462,7 @@
             h2 { font-size: 1.8rem; }
             nav { gap: 1.5rem; flex-wrap: wrap; }
             .project-overview, .solution-overview { padding: 1.5rem; }
-            th, td { padding: 0.8rem; font-size: 0.9rem; }
+            .visual-image { width: 95%; }
         }
         
         @media (max-width: 480px) {
@@ -498,6 +470,7 @@
             h2 { font-size: 1.5rem; }
             .code-block { padding: 1rem; }
             .code-content { font-size: 0.8rem; }
+            .visual-image { width: 100%; }
         }
         
         /* Animations */
@@ -525,10 +498,8 @@
     <header>
         <div class="container">
             <nav>
-                <a href="index.html"><i class="fas fa-home"></i> Portfolio Home</a>
-                <a href="data-analyst-projects.html"><i class="fas fa-project-diagram"></i> All Projects</a>
+                <a href="https://decireedomanico.github.io/portfolio/"><i class="fas fa-home"></i> Portfolio Home</a>
                 <a href="#overview">Project Overview</a>
-                <a href="#solution">Solution Design</a>
                 <a href="#sql">SQL Code</a>
                 <a href="#visuals">Dashboard</a>
             </nav>
@@ -549,7 +520,6 @@
                 
                 <div class="project-overview">
                     <p>The business request for this data analyst project was to develop an executive sales report for sales managers. The goal was to transition from static reporting to a dynamic, interactive dashboard that provides real-time insights into sales performance, customer behavior, and product trends.</p>
-                    <p>Based on the initial request, the following user stories were defined to guide the project delivery and ensure the acceptance criteria were met.</p>
                 </div>
             </div>
         </div>
@@ -566,8 +536,9 @@
                 <p>I designed and built a Power BI reporting solution focused on Internet Sales performance for both Sales Managers and Sales Representatives. The solution includes a consolidated executive dashboard showing key KPIs, top customers, and product trends, with automated daily refresh from the CRM.</p>
                 <p>It also provides interactive drill-through report pages that allow sales reps to filter and analyze sales per customer (purchase history and upsell opportunities) and per product (high-demand items, categories, and trend analysis). In addition, I created a performance tracking dashboard that compares actual sales versus budget over time using KPI cards and time-series visuals to support forecasting and progress monitoring.</p>
             </div>
-            
-            
+        </div>
+    </section>
+
     <!-- SQL Code Section -->
     <section id="sql" style="background: rgba(0, 255, 157, 0.03);">
         <div class="container">
@@ -583,7 +554,8 @@
                 <div class="visual-card">
                     <h3 style="color: var(--electric-blue); margin-bottom: 1rem;">SQL Development Environment</h3>
                     <p>Below is a screenshot of the SQL development environment showing the data transformation process:</p>
-                    <img src="https://i.imgur.com/TJtzwIL.png" alt="SQL Development Interface" class="visual-image">
+                    <!-- Updated to smaller, clearer image -->
+                    <img src="https://imgur.com/TJtzwIL.png" alt="SQL Development Interface" class="visual-image">
                     <p class="image-caption">SQL Server Management Studio interface with transformation scripts</p>
                 </div>
             </div>
@@ -814,7 +786,8 @@
                 <h3 style="color: var(--electric-blue); margin-bottom: 1.5rem;">Power BI Data Model</h3>
                 <div class="visual-card">
                     <p>The image below shows the data model implemented in Power BI. It illustrates how the core <code>FACT_InternetSales</code> table relates to the dimension tables and how the <code>FACT_Budget</code> table (sourced from Excel) is integrated for comparative analysis.</p>
-                    <img src="https://i.imgur.com/QlGXCyR.png" alt="Power BI Data Model" class="visual-image">
+                    <!-- Updated to smaller, clearer image -->
+                    <img src="https://imgur.com/Aa054ro.png" alt="Power BI Data Model" class="visual-image">
                     <p class="image-caption">Power BI data model showing table relationships including Excel-based budget data</p>
                 </div>
             </div>
@@ -824,10 +797,11 @@
                 <h3 style="color: var(--electric-blue); margin-bottom: 1.5rem;">Sales Management Dashboard</h3>
                 <div class="visual-card">
                     <p>This Power BI sales dashboard consists of a primary overview page and two detailed analysis pages, delivering insights into sales trends, customer performance, and product analytics.</p>
-                    <img src="https://i.imgur.com/IHLgnuZ.png" alt="Sales Performance Dashboard" class="visual-image">
+                    <!-- Updated to smaller, clearer image -->
+                    <img src="https://imgur.com/iRcVxxs.png" alt="Sales Performance Dashboard" class="visual-image">
                     <p class="image-caption">Executive Sales Dashboard with KPIs, trends, and interactive filters</p>
                     
-                    <!-- LIVE DASHBOARD LINK ADDED HERE -->
+                    <!-- LIVE DASHBOARD LINK -->
                     <div style="text-align: center; margin: 2rem 0;">
                         <a href="https://app.powerbi.com/links/3xWMcp-nM6?ctid=8910fec7-04d2-4806-8ce3-da56c923162f&pbi_source=linkShare" 
                            target="_blank" 
@@ -846,7 +820,8 @@
                 <h3 style="color: var(--electric-blue); margin-bottom: 1.5rem;">Data Table View</h3>
                 <div class="visual-card">
                     <p>Below is a view of the cleaned data tables in Power BI, showing the structured and transformed data ready for analysis and visualization.</p>
-                    <img src="https://i.imgur.com/pw9iRk2.png" alt="Data Table View" class="visual-image">
+                    <!-- Updated to smaller, clearer image -->
+                    <img src="https://imgur.com/5CCoXla.png" alt="Data Table View" class="visual-image">
                     <p class="image-caption">Cleaned and transformed data tables in Power BI</p>
                 </div>
             </div>
@@ -892,11 +867,8 @@
             </p>
             
             <div style="display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;">
-                <a href="index.html" class="back-to-portfolio">
-                    <i class="fas fa-arrow-left"></i> Back to Portfolio
-                </a>
-                <a href="data-analyst-projects.html" class="back-to-portfolio" style="background: var(--gradient-secondary);">
-                    <i class="fas fa-project-diagram"></i> View All Projects
+                <a href="https://decireedomanico.github.io/portfolio/" class="back-to-portfolio">
+                    <i class="fas fa-arrow-left"></i> Back to Portfolio Home
                 </a>
             </div>
             
