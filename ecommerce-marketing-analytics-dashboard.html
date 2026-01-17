@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Data Analyst Project: E-Commerce Marketing Analytics Dashboard by Deciree Domanico">
+    <title>Data Analyst Project | E-Commerce Marketing Analytics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Source+Code+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --neon-pink: #ff00ff;
+            --electric-blue: #00ffff;
+            --cyber-purple: #9d00ff;
+            --sql-green: #00ff9d;
+            --excel-green: #217346;
+            --python-blue: #3776ab;
+            --dark-bg: #0a0a1a;
+            --card-bg: rgba(18, 18, 48, 0.8);
+            --code-bg: rgba(10, 15, 35, 0.9);
+            --text-primary: rgba(255,255,255,0.95);
+            --text-secondary: rgba(255,255,255,0.7);
+            --gradient-primary: linear-gradient(135deg, var(--neon-pink), var(--cyber-purple));
+            --gradient-secondary: linear-gradient(135deg, var(--electric-blue), var(--cyber-purple));
+            --gradient-sql: linear-gradient(135deg, var(--sql-green), var(--electric-blue));
+            --gradient-excel: linear-gradient(135deg, var(--excel-green), var(--electric-blue));
+            --gradient-python: linear-gradient(135deg, var(--python-blue), var(--electric-blue));
+        }
+        
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
+        
+        body {
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+            font-size: 16px;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Animated Background with SQL Theme */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255, 0, 255, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0, 255, 255, 0.05) 0%, transparent 50%),
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 255, 157, 0.02) 2px, rgba(0, 255, 157, 0.02) 4px);
+            animation: bg-pulse 20s ease-in-out infinite;
+        }
+        
+        @keyframes bg-pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+        
+        /* Typography */
+        h1, h2, h3, h4 { 
+            font-family: 'Poppins', sans-serif; 
+            font-weight: 600; 
+            line-height: 1.3; 
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            background: var(--gradient-sql);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            color: var(--electric-blue);
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--gradient-sql);
+            border-radius: 2px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        /* Header - Updated with Horizontal Navigation */
+        header {
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            background: rgba(10, 10, 26, 0.95);
+            backdrop-filter: blur(15px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 255, 255, 0.1);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            align-items: center;
+        }
+        
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
+            display: inline-block;
+        }
+        
+        nav a:hover {
+            color: var(--sql-green);
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-sql);
+            transition: width 0.3s ease;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        nav a.active {
+            color: var(--sql-green);
+        }
+        
+        nav a.active::after {
+            width: 100%;
+        }
+        
+        /* Hero Section for Project */
+        .project-hero {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding: 4rem 0;
+            text-align: center;
+        }
+        
+        .project-hero-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .project-tag {
+            display: inline-block;
+            background: rgba(0, 255, 157, 0.1);
+            color: var(--sql-green);
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(0, 255, 157, 0.3);
+        }
+        
+        .project-overview {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 255, 157, 0.1);
+            backdrop-filter: blur(10px);
+            margin: 3rem 0;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .project-overview::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--gradient-sql);
+        }
+        
+        .project-overview p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            color: var(--text-secondary);
+        }
+        
+        /* Business Problem, Goal, Solution Boxes */
+        .problem-box, .goal-box, .solution-box {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            border-left: 4px solid;
+            backdrop-filter: blur(10px);
+            text-align: left;
+        }
+        
+        .problem-box {
+            border-left-color: #ff6b6b;
+            border: 1px solid rgba(255, 107, 107, 0.2);
+        }
+        
+        .problem-box h3 {
+            color: #ff6b6b;
+            margin-bottom: 1rem;
+        }
+        
+        .goal-box {
+            border-left-color: #4ecdc4;
+            border: 1px solid rgba(78, 205, 196, 0.2);
+        }
+        
+        .goal-box h3 {
+            color: #4ecdc4;
+            margin-bottom: 1rem;
+        }
+        
+        .solution-box {
+            border-left-color: var(--sql-green);
+            border: 1px solid rgba(0, 255, 157, 0.2);
+        }
+        
+        .solution-box h3 {
+            color: var(--sql-green);
+            margin-bottom: 1rem;
+        }
+        
+        /* SQL Code Blocks */
+        .sql-section {
+            margin: 4rem 0;
+        }
+        
+        .sql-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .sql-title i {
+            color: var(--sql-green);
+            font-size: 1.5rem;
+        }
+        
+        .code-block {
+            background: var(--code-bg);
+            border-radius: 10px;
+            border: 1px solid rgba(0, 255, 157, 0.2);
+            padding: 1.5rem;
+            overflow-x: auto;
+            font-family: 'Source Code Pro', monospace;
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+        
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .code-header h4 {
+            color: var(--sql-green);
+            font-family: 'Source Code Pro', monospace;
+            font-weight: 600;
+        }
+        
+        .copy-btn {
+            background: rgba(0, 255, 157, 0.1);
+            color: var(--sql-green);
+            border: 1px solid rgba(0, 255, 157, 0.3);
+            border-radius: 5px;
+            padding: 0.4rem 0.8rem;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .copy-btn:hover {
+            background: rgba(0, 255, 157, 0.2);
+        }
+        
+        .code-content {
+            color: #e0e0e0;
+            line-height: 1.6;
+            font-size: 0.9rem;
+            white-space: pre;
+            tab-size: 2;
+        }
+        
+        .sql-comment {
+            color: #6a9955;
+        }
+        
+        .sql-keyword {
+            color: #569cd6;
+        }
+        
+        .sql-function {
+            color: #dcdcaa;
+        }
+        
+        .sql-string {
+            color: #ce9178;
+        }
+        
+        /* Python Code Blocks */
+        .python-block {
+            background: var(--code-bg);
+            border-radius: 10px;
+            border: 1px solid rgba(55, 118, 171, 0.2);
+            padding: 1.5rem;
+            overflow-x: auto;
+            font-family: 'Source Code Pro', monospace;
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+        
+        .python-block .code-header h4 {
+            color: var(--python-blue);
+        }
+        
+        .python-block .copy-btn {
+            background: rgba(55, 118, 171, 0.1);
+            color: var(--python-blue);
+            border: 1px solid rgba(55, 118, 171, 0.3);
+        }
+        
+        .python-block .copy-btn:hover {
+            background: rgba(55, 118, 171, 0.2);
+        }
+        
+        .python-keyword {
+            color: #569cd6;
+        }
+        
+        .python-function {
+            color: #dcdcaa;
+        }
+        
+        .python-string {
+            color: #ce9178;
+        }
+        
+        /* Data Model & Dashboard Sections */
+        .visual-section {
+            margin: 4rem 0;
+        }
+        
+        .visual-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+        
+        .visual-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(0, 255, 157, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .visual-image {
+            max-width: 100%;
+            width: 800px;
+            height: auto;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 255, 157, 0.2);
+            margin: 1.5rem auto;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+        
+        .visual-image:hover {
+            transform: scale(1.02);
+        }
+        
+        .image-caption {
+            text-align: center;
+            color: var(--text-secondary);
+            font-style: italic;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        /* Tools & Skills */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .tool-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            border: 1px solid rgba(0, 255, 157, 0.1);
+            transition: all 0.3s;
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--sql-green);
+            box-shadow: 0 10px 25px rgba(0, 255, 157, 0.1);
+        }
+        
+        .tool-card i {
+            font-size: 2.5rem;
+            color: var(--sql-green);
+            margin-bottom: 1rem;
+        }
+        
+        .tool-card.python i {
+            color: var(--python-blue);
+        }
+        
+        .tool-card.powerbi i {
+            color: #f2c811;
+        }
+        
+        .tool-card.sql i {
+            color: var(--sql-green);
+        }
+        
+        /* Interactive Button */
+        .interactive-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1rem 2.5rem;
+            background: var(--gradient-sql);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            margin: 1.5rem 0;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .interactive-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 255, 157, 0.3);
+        }
+        
+        /* Footer */
+        footer {
+            padding: 3rem 0;
+            border-top: 1px solid rgba(0, 255, 157, 0.1);
+            text-align: center;
+            background: rgba(10, 10, 26, 0.5);
+            margin-top: 4rem;
+        }
+        
+        .back-to-portfolio {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1rem 2rem;
+            background: var(--gradient-sql);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            margin-top: 2rem;
+            transition: all 0.3s;
+        }
+        
+        .back-to-portfolio:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 255, 157, 0.3);
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            h1 { font-size: 3rem; }
+            h2 { font-size: 2.2rem; }
+            .container { padding: 0 1.5rem; }
+            .project-hero { min-height: 50vh; padding: 3rem 0; }
+            .visual-image { width: 90%; }
+            nav { gap: 1.5rem; flex-wrap: wrap; }
+        }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 1.8rem; }
+            .project-overview, .problem-box, .goal-box, .solution-box { padding: 1.5rem; }
+            .visual-image { width: 95%; }
+            nav { gap: 1rem; font-size: 0.9rem; }
+        }
+        
+        @media (max-width: 480px) {
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.5rem; }
+            .code-block, .python-block { padding: 1rem; }
+            .code-content { font-size: 0.8rem; }
+            .visual-image { width: 100%; }
+            nav { flex-direction: column; gap: 0.5rem; }
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-in {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg"></div>
+    
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="https://decireedomanico.github.io/portfolio/"><i class="fas fa-home"></i> Home</a>
+                <a href="executive-sales-dashboard.html">Executive Sales Dashboard</a>
+                <a href="ecommerce-marketing-analytics-dashboard.html" class="active">E-Commerce Marketing Analytics Dashboard</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Project Hero Section -->
+    <section id="overview" class="project-hero">
+        <div class="container">
+            <div class="project-hero-content animate-in">
+                <div class="project-tag">
+                    <i class="fas fa-chart-line"></i> Data Analyst Project
+                </div>
+                <h1>E-Commerce Marketing Analytics Dashboard</h1>
+                <p style="color: var(--electric-blue); font-size: 1.2rem; max-width: 800px; margin: 0 auto 2rem;">
+                    Transforming raw e-commerce data into actionable marketing insights through SQL, Power BI, and data modeling.
+                </p>
+                
+                
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Business Problem, Goal & Solution Section -->
+    <section id="solution" style="background: rgba(0, 255, 157, 0.03);">
+        <div class="container">
+            <div class="section-header animate-in">
+                <h2>Business Analysis</h2>
+            </div>
+            
+            <div class="problem-box animate-in">
+                <h3><i class="fas fa-exclamation-triangle"></i> Business Problem</h3>
+                <p>An online retail business offers a wide variety of sports and outdoor products, including 20 product categories such as Kayaks, Ski Boots, Surfboards, Fitness Trackers, and Running Shoes. Despite having consistent product availability and active marketing campaigns, the company struggled with uneven product performance and fluctuating monthly sales contribution.</p>
+            </div>
+            
+            <div class="goal-box animate-in">
+                <h3><i class="fas fa-bullseye"></i> Goal</h3>
+                <p>The goal of this analysis is to identify the main business problem and assess customer engagement, conversion rates, and product ratings using the dataset shared by the marketing team to determine areas that need improvement.</p>
+            </div>
+            
+            <div class="solution-box animate-in">
+                <h3><i class="fas fa-lightbulb"></i> Solution</h3>
+                <p>To improve performance, the marketing team should prioritize products with consistently high conversion rates such as Kayaks, Ski Boots, and Baseball Gloves, and launch seasonal promotions or personalized campaigns during peak months (e.g., January and September) to maximize demand. To address declining views and low interaction rates, they should experiment with more engaging content formats like interactive videos and user-generated content (UGC) while improving results by optimizing call-to-action (CTA) placement across social media and blog content, especially during historically low-engagement months (September to December). Lastly, to improve customer ratings, the business should implement a structured feedback loop where mixed and negative reviews are analyzed to identify common issues, followed by improvement actions and customer follow-ups to resolve concerns and encourage re-rating, aiming to raise average ratings closer to the 4.0 target.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SQL Code Section -->
+    <section id="sql" style="background: rgba(0, 255, 157, 0.03);">
+        <div class="container">
+            <div class="section-header animate-in">
+                <h2>Data Cleansing & Transformation (SQL)</h2>
+                <p style="max-width: 800px; margin: 0 auto; color: var(--text-secondary);">
+                    To build the necessary data model for marketing analysis, key tables were extracted and cleansed from the relational database using SQL. The engagement data was processed with Python for sentiment analysis and integrated during the data modeling stage in Power BI.
+                </p>
+            </div>
+            
+            <!-- DIM_Customers -->
+            <div class="sql-section animate-in">
+                <div class="sql-title">
+                    <i class="fas fa-users"></i>
+                    <h3>DIM_Customers Table</h3>
+                </div>
+                <div class="code-block">
+                    <div class="code-header">
+                        <h4>SQL Transformation for Customer Dimension</h4>
+                        <button class="copy-btn" onclick="copyCode('code1')">
+                            <i class="far fa-copy"></i> Copy Code
+                        </button>
+                    </div>
+                    <pre id="code1" class="code-content"><span class="sql-keyword">SELECT</span>
+ c.CustomerID,
+ c.CustomerName,
+ c.Email,
+ c.Gender,
+ c.Age,
+ <span class="sql-comment">-- GeographyID --</span> 
+ g.Country,
+ g.City
+ <span class="sql-keyword">FROM</span> dbo.customers <span class="sql-keyword">as</span> c
+  <span class="sql-keyword">LEFT JOIN</span>  dbo.geography <span class="sql-keyword">as</span> g
+  <span class="sql-keyword">ON</span> c.GeographyID = g.GeographyID;</pre>
+                </div>
+            </div>
+            
+            <!-- Dim_Products -->
+            <div class="sql-section animate-in">
+                <div class="sql-title">
+                    <i class="fas fa-cube"></i>
+                    <h3>Dim_Products Table</h3>
+                </div>
+                <div class="code-block">
+                    <div class="code-header">
+                        <h4>SQL Transformation for Product Dimension</h4>
+                        <button class="copy-btn" onclick="copyCode('code2')">
+                            <i class="far fa-copy"></i> Copy Code
+                        </button>
+                    </div>
+                    <pre id="code2" class="code-content"><span class="sql-keyword">SELECT</span> 
+  ProductID, 
+  ProductName, 
+  <span class="sql-comment">-- Category, --</span>
+  Price, 
+  <span class="sql-keyword">CASE</span> 
+  <span class="sql-keyword">WHEN</span> Price < 50 <span class="sql-keyword">THEN</span> 'Low' <span class="sql-keyword">WHEN</span> Price <span class="sql-keyword">BETWEEN</span> 50 
+  <span class="sql-keyword">AND</span> 200 <span class="sql-keyword">THEN</span> 'Medium' <span class="sql-keyword">ELSE</span> 'High' <span class="sql-keyword">END</span> <span class="sql-keyword">AS</span> 'PriceCategory' 
+<span class="sql-keyword">FROM</span> 
+  [PortfolioProject_MarketingAnalytics].[dbo].[products];</pre>
+                </div>
+            </div>
+            
+            <!-- Fact_Customer_Reviews -->
+            <div class="sql-section animate-in">
+                <div class="sql-title">
+                    <i class="fas fa-star"></i>
+                    <h3>Fact_Customer_Reviews Table</h3>
+                </div>
+                <div class="code-block">
+                    <div class="code-header">
+                        <h4>SQL Transformation for Customer Reviews</h4>
+                        <button class="copy-btn" onclick="copyCode('code3')">
+                            <i class="far fa-copy"></i> Copy Code
+                        </button>
+                    </div>
+                    <pre id="code3" class="code-content"><span class="sql-keyword">SELECT</span> 
+    ReviewID, 
+    CustomerID, 
+    ProductID,
+    ReviewDate,
+    Rating,  
+    <span class="sql-function">REPLACE</span>(ReviewText, '  ', ' ') <span class="sql-keyword">AS</span> ReviewText
+<span class="sql-keyword">FROM</span> 
+    dbo.customer_reviews;</pre>
+                </div>
+            </div>
+            
+            <!-- Fact_Customer_Journey -->
+            <div class="sql-section animate-in">
+                <div class="sql-title">
+                    <i class="fas fa-road"></i>
+                    <h3>Fact_Customer_Journey Table</h3>
+                </div>
+                <div class="code-block">
+                    <div class="code-header">
+                        <h4>SQL Transformation for Customer Journey</h4>
+                        <button class="copy-btn" onclick="copyCode('code4')">
+                            <i class="far fa-copy"></i> Copy Code
+                        </button>
+                    </div>
+                    <pre id="code4" class="code-content"><span class="sql-keyword">WITH</span> CleanedJourney <span class="sql-keyword">AS</span> (
+    <span class="sql-keyword">SELECT</span>
+        JourneyID,
+        CustomerID,
+        ProductID,
+        VisitDate,
+        <span class="sql-function">UPPER</span>(Stage) <span class="sql-keyword">AS</span> Stage,
+        Action,
+        Duration,
+        <span class="sql-function">AVG</span>(Duration) <span class="sql-keyword">OVER</span> (<span class="sql-keyword">PARTITION BY</span> VisitDate) <span class="sql-keyword">AS</span> avg_duration,
+        <span class="sql-function">ROW_NUMBER</span>() <span class="sql-keyword">OVER</span> (
+            <span class="sql-keyword">PARTITION BY</span> CustomerID, ProductID, VisitDate, <span class="sql-function">UPPER</span>(Stage), Action
+            <span class="sql-keyword">ORDER BY</span> JourneyID
+        ) <span class="sql-keyword">AS</span> row_num
+    <span class="sql-keyword">FROM</span> dbo.customer_journey
+)
+<span class="sql-keyword">SELECT</span>
+    JourneyID,
+    CustomerID,
+    ProductID,
+    VisitDate,
+    Stage,
+    Action,
+    <span class="sql-function">COALESCE</span>(Duration, avg_duration) <span class="sql-keyword">AS</span> Duration
+<span class="sql-keyword">FROM</span> CleanedJourney
+<span class="sql-keyword">WHERE</span> row_num = 1
+<span class="sql-keyword">ORDER BY</span> JourneyID;</pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Data Model & Dashboard Sections -->
+    <section id="visuals">
+        <div class="container">
+            <div class="section-header animate-in">
+                <h2>Data Visualization & Dashboard</h2>
+            </div>
+            
+            <!-- Data Model -->
+            <div class="visual-section animate-in">
+                <h3 style="color: var(--electric-blue); margin-bottom: 1.5rem;">Data Model</h3>
+                <div class="visual-card">
+                    <p>The image below shows the data model implemented for this E-Commerce Marketing Analytics project. It illustrates how customer, product, journey, and review data are integrated for comprehensive analysis.</p>
+                    <!-- Placeholder for Data Model Image -->
+                    <div style="background: rgba(0, 0, 0, 0.3); padding: 3rem; border-radius: 10px; text-align: center; margin: 1.5rem 0;">
+                        <i class="fas fa-project-diagram" style="font-size: 4rem; color: var(--sql-green); opacity: 0.5;"></i>
+                        <p style="color: var(--text-secondary); margin-top: 1rem;">E-Commerce Marketing Data Model Diagram</p>
+                    </div>
+                    <p class="image-caption">Data model showing relationships between customer, product, journey, and review tables</p>
+                </div>
+            </div>
+            
+            <!-- Dashboard Overview -->
+            <div class="visual-section animate-in">
+                <h3 style="color: var(--electric-blue); margin-bottom: 1.5rem;">Dashboard Overview</h3>
+                <div class="visual-card">
+                    <p>The E-Commerce Marketing Analytics Dashboard provides comprehensive insights into marketing performance, customer behavior, and product performance across multiple channels.</p>
+                    <!-- Placeholder for Dashboard Image -->
+                    <div style="background: rgba(0, 0, 0, 0.3); padding: 3rem; border-radius: 10px; text-align: center; margin: 1.5rem 0;">
+                        <i class="fas fa-chart-bar" style="font-size: 4rem; color: var(--sql-green); opacity: 0.5;"></i>
+                        <p style="color: var(--text-secondary); margin-top: 1rem;">E-Commerce Marketing Analytics Dashboard</p>
+                    </div>
+                    <p class="image-caption">Marketing dashboard showing customer acquisition, conversion rates, and campaign performance</p>
+                    
+                    <!-- LIVE DASHBOARD LINK -->
+                    <div style="text-align: center; margin: 2rem 0;">
+                        <a href="https://decireedomanico.github.io/portfolio/executive-sales-dashboard.html" 
+                           target="_blank" 
+                           class="interactive-btn">
+                            <i class="fas fa-external-link-alt"></i> View Project Dashboard
+                        </a>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.5rem;">
+                            Click to explore the marketing analytics dashboard with interactive filters and insights
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tools & Skills -->
+            <div class="visual-section animate-in">
+                <h3 style="color: var(--electric-blue); margin-bottom: 1.5rem;">Tools & Technologies Used</h3>
+                <div class="tools-grid">
+                    <div class="tool-card sql">
+                        <i class="fas fa-database"></i>
+                        <h4>SQL Server</h4>
+                        <p>Data extraction & transformation</p>
+                    </div>
+                    <div class="tool-card powerbi">
+                        <i class="fas fa-chart-line"></i>
+                        <h4>Power BI</h4>
+                        <p>Data modeling & visualization</p>
+                    </div>
+                    <div class="tool-card">
+                        <i class="fas fa-cube"></i>
+                        <h4>Data Modeling</h4>
+                        <p>Table relationships & schema design</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section id="cta" style="background: linear-gradient(135deg, rgba(0, 255, 157, 0.1), rgba(0, 255, 255, 0.1)); padding: 4rem 0;">
+        <div class="container">
+            <div class="section-header animate-in" style="text-align: center;">
+                <h2>Let's Connect!</h2>
+                <p style="max-width: 700px; margin: 0 auto 2rem; color: var(--text-secondary); font-size: 1.1rem;">
+                    I'm passionate about transforming e-commerce data into actionable marketing insights and creating impactful dashboards.
+                    If you're looking for a data analyst or want to discuss this project further, feel free to reach out!
+                </p>
+            </div>
+            
+            <div class="visual-card animate-in" style="max-width: 800px; margin: 0 auto; text-align: center;">
+                <div style="display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center; margin-bottom: 2rem;">
+                    <div style="flex: 1; min-width: 250px;">
+                        <div style="background: rgba(0, 255, 157, 0.1); padding: 1.5rem; border-radius: 15px; border: 1px solid rgba(0, 255, 157, 0.2); height: 100%;">
+                            <i class="fas fa-envelope" style="font-size: 2.5rem; color: var(--sql-green); margin-bottom: 1rem;"></i>
+                            <h4 style="color: var(--electric-blue); margin-bottom: 0.5rem;">Email</h4>
+                            <p style="color: var(--text-secondary); margin-bottom: 1rem;">For project inquiries and collaborations</p>
+                            <a href="mailto:decireedomanico1@gmail.com" 
+                               style="color: var(--sql-green); text-decoration: none; font-weight: 600; font-size: 1.1rem; word-break: break-all;">
+                               
+                            </a>
+                        </div>
+                    </div>
+                    
+                   
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 2rem;">
+                    <h4 style="color: var(--electric-blue); margin-bottom: 1rem;">Interested in this project?</h4>
+                    <p style="color: var(--text-secondary); margin-bottom: 1.5rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+                        I'm open to freelance opportunities, full-time positions, or collaborative projects in e-commerce analytics, 
+                        marketing intelligence, and data-driven decision making.
+                    </p>
+                    
+                    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                        <a href="mailto:decireedomanico1@gmail.com?subject=E-Commerce Marketing Analytics Project Inquiry&body=Hi Deciree,%0A%0AI saw your E-Commerce Marketing Analytics Dashboard project and would like to connect..." 
+                           class="interactive-btn">
+                            <i class="fas fa-paper-plane"></i> Send Message
+                        </a>
+                        
+                        <a href="executive-sales-dashboard.html" 
+                           class="interactive-btn" 
+                           style="background: var(--gradient-secondary);">
+                            <i class="fas fa-chart-line"></i> View Sales Dashboard
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div style="font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 800; background: var(--gradient-sql); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1rem;">
+                Data Analyst Project
+            </div>
+            
+            <p style="color: var(--text-secondary); max-width: 800px; margin: 0 auto 2rem;">
+                This project demonstrates end-to-end e-commerce marketing analysis skills: from SQL data extraction and Python sentiment analysis to Power BI dashboard creation for actionable marketing insights.
+            </p>
+            
+            <div style="display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;">
+                <a href="https://decireedomanico.github.io/portfolio/" class="back-to-portfolio">
+                    <i class="fas fa-arrow-left"></i> Back to Portfolio Home
+                </a>
+                
+                <a href="executive-sales-dashboard.html" class="back-to-portfolio" style="background: var(--gradient-secondary);">
+                    <i class="fas fa-chart-line"></i> View Sales Dashboard
+                </a>
+            </div>
+            
+            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 2rem;">
+                © 2025 Deciree France P. Domanico | E-Commerce Marketing Analytics Project
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                if(this.getAttribute('href').startsWith('#')) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if(targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        });
+
+        // Copy code functionality
+        function copyCode(elementId) {
+            const codeElement = document.getElementById(elementId);
+            const textArea = document.createElement('textarea');
+            textArea.value = codeElement.textContent;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            
+            // Visual feedback
+            const button = event.target.closest('.copy-btn');
+            const originalText = button.innerHTML;
+            button.innerHTML = '<i class="fas fa-check"></i> Copied!';
+            setTimeout(() => {
+                button.innerHTML = originalText;
+            }, 2000);
+        }
+
+        // Syntax highlighting helper
+        function highlightSQL(text) {
+            return text
+                .replace(/(SELECT|FROM|WHERE|JOIN|ON|AS|ORDER BY|GROUP BY|LEFT|RIGHT|INNER|OUTER|CASE|WHEN|THEN|END|ISNULL|GETDATE|YEAR|LEFT|UPPER|COALESCE|AVG|ROW_NUMBER|OVER|PARTITION BY|REPLACE|WITH|BETWEEN)\b/gi, '<span class="sql-keyword">$1</span>')
+                .replace(/(\d+)/g, '<span class="sql-number">$1</span>')
+                .replace(/(--.*?(\n|$))/g, '<span class="sql-comment">$1</span>')
+                .replace(/'([^']*)'/g, '<span class="sql-string">\'$1\'</span>')
+                .replace(/(\b(AVG|ROW_NUMBER|COALESCE|UPPER|REPLACE)\b)/gi, '<span class="sql-function">$1</span>');
+        }
+
+        // Python syntax highlighting helper
+        function highlightPython(text) {
+            return text
+                .replace(/(def|if|elif|else|return)\b/g, '<span class="python-keyword">$1</span>')
+                .replace(/(get_sentiment|sentiment_bucket)\b/g, '<span class="python-function">$1</span>')
+                .replace(/(".*?"|'.*?')/g, '<span class="python-string">$1</span>')
+                .replace(/(\d+\.?\d*)/g, '<span class="sql-number">$1</span>');
+        }
+
+        // Apply syntax highlighting on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Apply SQL highlighting
+            const sqlElements = document.querySelectorAll('.code-block .code-content');
+            sqlElements.forEach(el => {
+                const original = el.innerHTML;
+                el.innerHTML = highlightSQL(original);
+            });
+            
+            // Apply Python highlighting
+            const pythonElements = document.querySelectorAll('.python-block .code-content');
+            pythonElements.forEach(el => {
+                const original = el.innerHTML;
+                el.innerHTML = highlightPython(original);
+            });
+            
+            // Add current year to footer
+            const yearElement = document.querySelector('footer p');
+            if(yearElement) {
+                yearElement.innerHTML = yearElement.innerHTML.replace('2025', new Date().getFullYear());
+            }
+        });
+
+        // Scroll animation
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        // Observe all elements with animate-in class
+        document.querySelectorAll('.animate-in').forEach((el) => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
